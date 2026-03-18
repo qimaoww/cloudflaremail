@@ -182,9 +182,6 @@ const DotMap = () => {
       return
     }
 
-    let animationFrameId = 0
-    let startTime = Date.now()
-
     const drawDots = () => {
       ctx.clearRect(0, 0, dimensions.width, dimensions.height)
       dots.forEach((dot) => {
@@ -196,26 +193,15 @@ const DotMap = () => {
     }
 
     const drawRoutes = () => {
-      const currentTime = (Date.now() - startTime) / 1000
-
       routes.forEach((route) => {
-        const elapsed = currentTime - route.start.delay
-        if (elapsed <= 0) {
-          return
-        }
-
-        const duration = 3
-        const progress = Math.min(elapsed / duration, 1)
-
-        const x = route.start.x + (route.end.x - route.start.x) * progress
-        const y = route.start.y + (route.end.y - route.start.y) * progress
-
         ctx.beginPath()
         ctx.moveTo(route.start.x, route.start.y)
-        ctx.lineTo(x, y)
+        ctx.lineTo(route.end.x, route.end.y)
         ctx.strokeStyle = route.color
         ctx.lineWidth = 1.5
+        ctx.setLineDash([5, 7])
         ctx.stroke()
+        ctx.setLineDash([])
 
         ctx.beginPath()
         ctx.arc(route.start.x, route.start.y, 3, 0, Math.PI * 2)
@@ -223,38 +209,19 @@ const DotMap = () => {
         ctx.fill()
 
         ctx.beginPath()
-        ctx.arc(x, y, 3, 0, Math.PI * 2)
+        ctx.arc(route.end.x, route.end.y, 3, 0, Math.PI * 2)
         ctx.fillStyle = "#3b82f6"
         ctx.fill()
 
         ctx.beginPath()
-        ctx.arc(x, y, 6, 0, Math.PI * 2)
-        ctx.fillStyle = "rgba(59, 130, 246, 0.4)"
+        ctx.arc(route.end.x, route.end.y, 6, 0, Math.PI * 2)
+        ctx.fillStyle = "rgba(59, 130, 246, 0.18)"
         ctx.fill()
-
-        if (progress === 1) {
-          ctx.beginPath()
-          ctx.arc(route.end.x, route.end.y, 3, 0, Math.PI * 2)
-          ctx.fillStyle = route.color
-          ctx.fill()
-        }
       })
     }
 
-    const animate = () => {
-      drawDots()
-      drawRoutes()
-
-      const currentTime = (Date.now() - startTime) / 1000
-      if (currentTime > 15) {
-        startTime = Date.now()
-      }
-
-      animationFrameId = requestAnimationFrame(animate)
-    }
-
-    animate()
-    return () => cancelAnimationFrame(animationFrameId)
+    drawDots()
+    drawRoutes()
   }, [dimensions, dots, routes])
 
   return (
