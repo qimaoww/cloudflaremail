@@ -1,17 +1,17 @@
 # Freemail - 临时邮箱服务
 
-[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/idinging/freemail)
+[![Deploy to Cloudflare Workers](https://deploy.workers.cloudflare.com/button)](https://deploy.workers.cloudflare.com/?url=https://github.com/ChouHX/CloudflareMail)
 
-一个基于 Cloudflare Workers + D1 + R2 构建的**开源临时邮箱服务**，支持邮件接收、发送、转发、用户管理等完整功能。
+一个基于 Cloudflare Workers + D1 + R2 构建的**开源临时邮箱服务**，支持邮件接收、发送、转发、用户管理等完整功能。 
+
+完整文档查看: https://github.com/idinging/freemail
 
 **当前版本：V4.8** - 新增单个邮件转发和收藏功能
 
 `转发的地址需要在cloudflare Email Addresses中验证`
 
-📖 **[一键部署指南](docs/yijianbushu.md)** | 📬 **[Resend 发件配置](docs/resend.md)** | 📚 **[API 文档](docs/api.md)**
-
 ## 📸 项目展示
-### 体验地址： https://mailexhibit.dinging.top/
+### 体验地址： https://mail.funapi.top/
 
 ### 体验账号： guest
 ### 体验密码： admin
@@ -22,22 +22,8 @@
 #### 首页
 ![首页展示](pic/shouye.png)
 
-### 手机端生成与历史
-<div style="display: flex; gap: 20px; justify-content: center; margin: 20px 0;">
-  <img src="./pic/phone/shouye.png" alt="手机端生成邮箱" style="height: 400px;" />
-  <img src="./pic/phone/lishi.png" alt="手机端历史邮箱" style="height: 400px;" />
-</div>
-
-### 单个邮箱页
-
-![单个邮箱首页](./pic/v4/youxiang.png)
-
 ### 全部邮箱预览
-![单个邮箱首页](./pic/v4/xiugaiquanju.png)
-![单个邮箱首页](./pic/v4/liebiao.png)
-
-
-#### [更多展示点击查看](docs/zhanshi.md)
+![邮箱列表](./pic/list.png)
 
 ## 功能特性
 
@@ -51,46 +37,6 @@
 | ⚡ **技术架构** | Cloudflare Workers · D1 数据库 · R2 存储 · Email Routing |
 
 > 💡 邮箱用户自行修改密码功能默认关闭，如需开启请将 `mailbox.html` 第 77-80 行取消注释。
-
-## 版本历史
-
-<details>
-<summary><strong>V4.8</strong>（当前版本）- 邮件转发和收藏</summary>
-
-- 邮箱管理页面支持按转发/收藏状态筛选
-- 支持将指定邮箱转发到目标邮箱
-- 批量前缀转发可通过 `FORWARD_RULES` 环境变量配置
-</details>
-
-<details>
-<summary><strong>V4.5</strong> - 多域名发送配置</summary>
-
-- 支持为不同域名配置不同的 Resend API 密钥
-- 支持键值对、JSON、单密钥三种配置格式
-- 系统根据发件人域名自动选择 API 密钥
-</details>
-
-<details>
-<summary><strong>V4.0</strong> - 邮箱登录与全局管理</summary>
-
-- 支持邮箱地址单点登录
-- 全局邮箱管理功能，可限制单个邮箱登录
-- 邮箱搜索、随机人名生成、列表/卡片视图切换
-</details>
-
-<details>
-<summary><strong>V3.x</strong> - 用户管理与性能优化</summary>
-
-- V3.5：数据库查询优化、R2 存储完整 EML、移动端适配
-- V3.0：三层权限模型、用户管理后台、前端权限防护
-</details>
-
-<details>
-<summary><strong>V1.x ~ V2.x</strong> - 基础功能</summary>
-
-- V2.0：Resend 发件集成、邮箱置顶
-- V1.0：邮箱生成、邮件接收、验证码提取
-</details>
 
 ## 部署配置
 
@@ -143,7 +89,7 @@ RESEND_API_KEY='{"domain1.com":"re_key1","domain2.com":"re_key2"}'
 3. 点击「添加目标地址」，输入转发目标邮箱
 4. 前往目标邮箱收取验证邮件并点击确认链接
 
-![转发目标地址验证](pic/resend/zhuanfa.png)
+![转发目标地址验证](pic/forward.png)
 
 ```bash
 # 键值对格式
@@ -188,23 +134,6 @@ wrangler d1 execute TEMP_MAIL_DB --command "SELECT * FROM mailboxes LIMIT 10"
 - **静态资源缓存**：更新后在 Cloudflare 控制台 Purge Everything，浏览器强制刷新
 - **R2/D1 费用**：有免费额度限制，建议定期清理过期邮件
 - **安全**：生产环境务必修改默认的 `ADMIN_PASSWORD` 和 `JWT_TOKEN`
-
-## Star History
-
-[![Star History Chart](https://api.star-history.com/svg?repos=idinging/freemail&type=Date)](https://www.star-history.com/#idinging/freemail&Date)
-
-## 联系方式
-
-- 微信：`iYear1213`
-
-## Buy me a coffee
-
-如果你觉得本项目对你有帮助，欢迎赞赏支持：
-
-<p align="left">
-  <img src="pic/alipay.jpg" alt="支付宝赞赏码" height="400" />
-  <img src="pic/weichat.jpg" alt="微信赞赏码" height="400" />
-</p>
 
 ## 许可证
 
